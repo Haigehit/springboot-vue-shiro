@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.78.131.193:3306/shiro?characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/shiro?characterEncoding=utf8
     username: root
-    password: uAiqwVwjJ8-j
+    password: 1234
     type: com.alibaba.druid.pool.DruidDataSource
     filters: stat
     maxActive: 20
