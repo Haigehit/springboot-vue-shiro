@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.shirodemo.mapper.RoleMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.shiro.shirodemo.entity.Role">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="type" property="type" />
+		<result column="description" property="description" />
+	</resultMap>
+
+	<select id="findRoleByPage" resultMap="BaseResultMap">
+        SELECT
+        role.id,
+        role.`name`,
+        role.type,
+		role.description
+        FROM
+        `sys_role` AS role
+		WHERE (1=1)
+		<if test="''!=dto.keyword">
+			AND role.`name` LIKE CONCAT('%',#{dto.keyword},'%')
+		</if>
+	</select>
+
+	<!--绑定权限下拉框-->
+	<select id="findAllRoles" resultMap="BaseResultMap">
+		SELECT
+		sys_role.id,
+		sys_role.`name`
+		FROM
+		sys_role
+	</select>
+
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.shirodemo.mapper.PermissionMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.shiro.shirodemo.entity.Permission">
+		<id column="id" property="id" />
+		<result column="url" property="url" />
+		<result column="name" property="name" />
+		<result column="fatherId" property="fatherId" />
+		<result column="sort" property="sort" />
+		<result column="type" property="type" />
+	</resultMap>
+
+	<!--分页查询菜单-->
+	<select id="findPermissionByPage" resultMap="BaseResultMap">
+		SELECT
+		permis.url,
+		permis.`name`,
+		permis.id,
+		lastPermis.`name` AS lastPermis,
+		attr.`name` AS typeName
+		FROM
+		sys_permission AS permis
+		LEFT JOIN sys_permission AS lastPermis ON permis.fatherId = lastPermis.id
+		INNER JOIN sys_attribute_detail attr ON permis.type = attr.id
+		WHERE
+		(1 = 1)
+		<if test="''!=dto.keyword">
+            AND permis.`name` LIKE CONCAT('%',#{dto.keyword},'%')
+        </if>
+	</select>
+
+
+	<select id="findPermissionByName" resultMap="BaseResultMap">
+		SELECT
+		permis.url,
+		permis.`name`,
+		permis.id
+		FROM
+		sys_permission AS permis
+		WHERE (1=1)
+		<if test="''!= name">
+			AND permis.url LIKE CONCAT('%',#{name},'%')
+		</if>
+	</select>
+
+
+	<!--查询所有父级菜单绑定下拉框-->
+	<select id="findLastPermissionByType" resultMap="BaseResultMap">
+		SELECT
+		permis.`name`,
+		permis.id
+		FROM
+		sys_permission AS permis
+		WHERE permis.type = #{type}
+	</select>
+
+    <!--查询所有父级菜单绑定树形-->
+	<select id="findBasePermission" resultType="com.shiro.shirodemo.pojo.dto.PermisDto">
+		SELECT
+		permis.id,
+		permis.`name`,
+		permis.fatherId AS lastId
+		FROM
+		sys_permission permis
+		WHERE permis.fatherId = '0'
+	</select>
+
+    <!--查询所有父级菜单绑定树形-->
+    <select id="findBasePermission" resultType="com.shiro.shirodemo.pojo.dto.PermisDto">
+        SELECT
+        permis.id,
+        permis.`name`
+        FROM
+        sys_permission permis
+        WHERE permis.fatherId = '0'
+    </select>
+
+    <!--根据父级id查询菜单-->
+    <select id="findPermissionByFatherId" resultType="com.shiro.shirodemo.pojo.dto.PermisDto">
+        SELECT
+        permis.id,
+        permis.`name`
+        FROM
+        sys_permission permis
+        WHERE permis.fatherId = #{fatherId}
+    </select>
+
+	<!--根据url查询记录-->
+	<select id="findCountByUrl" resultType="java.lang.Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		sys_permission permis
+		WHERE permis.url = #{requestUrl}
+	</select>
+
+</mapper>

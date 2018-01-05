@@ -1,0 +1,36 @@
+server:
+  port: 8089
+  context-path: /shiro
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://120.78.131.193:3306/shiro?characterEncoding=utf8
+    username: root
+    password: uAiqwVwjJ8-j
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+#mybatis 配置
+mybatis:
+  mapper-locations: classpath:com/shiro/shirodemo/mapper/xml/*.xml
+  type-aliases-package: com.shiro.shirodemo.entity
+
+logging:
+  file: logs/spring-boot-logging.log
+  level: warn
+
+
+

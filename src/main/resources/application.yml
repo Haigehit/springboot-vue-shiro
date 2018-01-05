@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+logging:
+  config: classpath:logback-spring.xml
+  path: /workspace/rock/jpa-test/log
+  level:
+    root: INFO

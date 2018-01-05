@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.shirodemo.mapper.RolePermissionMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.shiro.shirodemo.entity.RolePermission">
+		<result column="rid" property="rid" />
+		<result column="pid" property="pid" />
+	</resultMap>
+	
+	<select id="findRolesPermisByRole" resultMap="BaseResultMap">
+		SELECT
+			rp.pid
+		FROM
+			`sys_role_permission` rp
+		WHERE
+			rp.rid = #{dto.id}
+	</select>
+	
+	<select id="findCountByRole" resultType="java.lang.Integer">
+		SELECT DISTINCT
+			COUNT(*)
+		FROM
+			sys_role_permission rp
+		INNER JOIN sys_permission p ON rp.pid = p.id
+		WHERE
+			p.url = #{url}
+		AND rp.rid =  #{roleId}
+	</select>
+
+</mapper>
