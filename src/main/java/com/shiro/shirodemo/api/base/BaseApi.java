@@ -12,6 +12,10 @@ import org.apache.shiro.subject.Subject;
  */
 public class BaseApi {
 
+    /**
+     * 获取用户名称
+     * @return
+     */
     protected String getUserName() {
 
         Subject subject = SecurityUtils.getSubject();
@@ -20,6 +24,10 @@ public class BaseApi {
 
     }
 
+    /**
+     * 获取用户名id
+     * @return
+     */
     protected String getUserId() {
 
         Subject subject = SecurityUtils.getSubject();
@@ -28,11 +36,27 @@ public class BaseApi {
 
     }
 
+    /**
+     * 获取角色id
+     * @return
+     */
     protected String getRoleId() {
 
         Subject subject = SecurityUtils.getSubject();
         User user = (User)subject.getPrincipal();
         return user.getRid();
+
+    }
+
+    /**
+     * 获取角色名称
+     * @return
+     */
+    protected String getRoleName() {
+
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User)subject.getPrincipal();
+        return user.getRoleName();
 
     }
 

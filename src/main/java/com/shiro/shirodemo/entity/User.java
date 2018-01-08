@@ -55,6 +55,12 @@ public class User extends Model<User> {
      */
 	private String rid;
 
+	@TableField(exist = false)
+	/**
+	 * 角色名称
+	 */
+	private String roleName;
+
 
 	public String getId() {
 		return id;
@@ -118,6 +124,14 @@ public class User extends Model<User> {
 
 	public void setStatus(Long status) {
 		this.status = status;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 	public static final String ID = "id";

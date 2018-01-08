@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiro.shirodemo.mapper.OperatingRecordMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.shiro.shirodemo.entity.OperatingRecord">
+		<id column="id" property="id" />
+		<result column="requestUrl" property="requestUrl" />
+		<result column="remoteAddr" property="remoteAddr" />
+		<result column="params" property="params" />
+		<result column="method" property="method" />
+		<result column="create_time" property="createTime" />
+		<result column="flag" property="flag" />
+	</resultMap>
+
+	<select id="findOperatingRecordByPage" resultMap="BaseResultMap">
+	SELECT
+		op_r.id,
+		op_r.requestUrl,
+		op_r.remoteAddr,
+		op_r.params,
+		op_r.method,
+		op_r.create_time,
+		op_r.flag
+	FROM
+		`sys_operating_record` op_r
+		WHERE
+		(1 = 1)
+		<if test="''!=dto.keyword">
+			AND (op_r.requestUrl LIKE CONCAT('%',#{dto.keyword},'%')
+			OR op_r.remoteAddr LIKE CONCAT('%',#{dto.keyword},'%')
+			OR op_r.method LIKE CONCAT('%',#{dto.keyword},'%')
+			OR op_r.flag LIKE CONCAT('%',#{dto.keyword},'%'))
+		</if>
+		ORDER BY op_r.create_time DESC
+	</select>
+
+</mapper>

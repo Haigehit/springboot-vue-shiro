@@ -28,9 +28,4 @@ mybatis:
   mapper-locations: classpath:com/shiro/shirodemo/mapper/xml/*.xml
   type-aliases-package: com.shiro.shirodemo.entity
 
-logging:
-  file: logs/spring-boot-logging.log
-  level: warn
-
-
 

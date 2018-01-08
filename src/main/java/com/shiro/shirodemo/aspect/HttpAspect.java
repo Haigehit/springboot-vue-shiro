@@ -2,9 +2,11 @@ package com.shiro.shirodemo.aspect;
 
 import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.api.base.BaseApi;
+import com.shiro.shirodemo.entity.OperatingRecord;
 import com.shiro.shirodemo.entity.Permission;
 import com.shiro.shirodemo.entity.RolePermission;
 import com.shiro.shirodemo.exception.MyException;
+import com.shiro.shirodemo.service.OperatingRecordService;
 import com.shiro.shirodemo.service.PermissionService;
 import com.shiro.shirodemo.service.RolePermissionService;
 import com.shiro.shirodemo.utils.JsonResult;
@@ -22,6 +24,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +43,9 @@ public class HttpAspect extends BaseApi{
 
     @Autowired
     private PermissionService permissionService;
+
+    @Autowired
+    private OperatingRecordService operatingRecordService;
 
     private final static Logger log = LoggerFactory.getLogger(HttpAspect.class);
 
@@ -101,7 +108,7 @@ public class HttpAspect extends BaseApi{
     }
 
     /**
-     * @desc: 权限拦截器
+     * @desc: 请求拦截器
      *
      * @author: jwy
      * @date: 2017/12/28
@@ -111,30 +118,44 @@ public class HttpAspect extends BaseApi{
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             HttpServletRequest request = attributes.getRequest();
 
+            String requestUrl = request.getRequestURI();
+            String remoteAddr = request.getRemoteAddr();
+            String method = request.getMethod();
+            String args = Arrays.toString(joinPoint.getArgs());
 
         log.info("========================== ↓收到请求↓ ==========================");
-        log.info("请求url:{}",request.getRequestURI());
-        log.info("请求源ip:{}",request.getRemoteAddr());
-        log.info("请求方式:{}",request.getMethod());
-        log.info("请求方法:{}",joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName()+ "()");
-        log.info("请求参数:{}",joinPoint.getArgs());
+        log.info("请求url:{}",requestUrl);
+        log.info("请求源ip:{}",remoteAddr);
+        log.info("请求方式:{}",method);
+       // log.info("请求方法:{}",joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName()+ "()");
+        log.info("请求参数:{}", args);
         log.info("getContextPath:{}",request.getContextPath());
+        log.info("========================== ↑收到请求↑ ==========================");
 
-        String requestUrl = request.getRequestURI().replaceAll(request.getContextPath(),"");
-        Integer count = permissionService.findCountByUrl(requestUrl);
+        OperatingRecord or = new OperatingRecord();
+        or.setRequestUrl(request.getRequestURI());
+        or.setRemoteAddr(remoteAddr);
+        or.setMethod(method);
+        or.setParams(args);
+        or.setCreateTime(new Date());
+
+
+        Integer count = permissionService.findCountByUrl(request.getRequestURI().replaceAll(request.getContextPath(),""));
         if (count != 0){
             String roleId = super.getRoleId();
             if (StringUtils.isEmpty(roleId)) {
-                log.info("无权访问");
+                or.setFlag("授权不通过");
+                operatingRecordService.insert(or);
                 throw new MyException(JsonResult.result(EnumCode.FORBIDDEN.getValue(),EnumCode.FORBIDDEN.getText()));
             }
-            Integer row = rolePermissionService.findCountByRole(roleId, requestUrl);
-            if (row == 0) {
-                log.info("无权访问:" + request.getRemoteAddr()+ request.getContextPath() + requestUrl);
+            Integer row = rolePermissionService.findCountByRole(roleId, request.getRequestURI().replaceAll(request.getContextPath(),""));
+            if (row == 0 && !super.getRoleName().equals("admin")) {
+                or.setFlag("授权不通过");
+                operatingRecordService.insert(or);
                 throw new MyException(JsonResult.result(EnumCode.FORBIDDEN.getValue(),EnumCode.FORBIDDEN.getText()));
             }
-        } else {
-            log.info("有权访问");
         }
+        or.setFlag("授权通过");
+        operatingRecordService.insert(or);
     }
 }

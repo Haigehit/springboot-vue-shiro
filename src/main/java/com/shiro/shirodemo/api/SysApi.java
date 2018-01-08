@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.entity.Attribute;
 import com.shiro.shirodemo.entity.AttributeDetail;
+import com.shiro.shirodemo.entity.OperatingRecord;
 import com.shiro.shirodemo.pojo.dto.AttributeDetailDto;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.vo.AttributeDetailVo;
 import com.shiro.shirodemo.service.AttributeDetailService;
 import com.shiro.shirodemo.service.AttributeService;
+import com.shiro.shirodemo.service.OperatingRecordService;
 import com.shiro.shirodemo.utils.JsonResult;
 import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,13 @@ public class SysApi {
      * 属性明细
      */
     private AttributeDetailService attributeDetailService;
+
+
+    @Autowired
+    /**
+     * 操作记录
+     */
+    private OperatingRecordService operatingRecordService;
 
     /**
      * @desc: 查询属性
@@ -131,6 +140,21 @@ public class SysApi {
             return JsonResult.result(EnumCode.GONE.getValue(),"没有记录");
         }
         return JsonResult.result(EnumCode.OK.getValue(),EnumCode.OK.getText(),list);
+    }
+
+    /**
+     * 查询操作记录
+     *
+     * @param dto
+     * @return
+     */
+    @RequestMapping(value = "/findOperatingRecordByPage" ,method = RequestMethod.GET)
+    public Object findOperatingRecordByPage(ParamsDto dto) {
+
+        Page<OperatingRecord> page = new Page<OperatingRecord>(dto.getStartPage(),dto.getPageSize());
+        List<OperatingRecord> list = operatingRecordService.findOperatingRecordByPage(page,dto);
+        return ResultUtil.result(EnumCode.OK.getValue(),EnumCode.OK.getText(),list,page.getTotal());
+
     }
 
 
