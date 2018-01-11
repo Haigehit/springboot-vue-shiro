@@ -43,10 +43,20 @@ public class UserDto  implements Serializable{
      */
 	private Date lastLoginTime;
 
-    /**
-     * 1:有效，0:禁止登录
-     */
+	/**
+	 * 1:有效，0:禁止登录
+	 */
+	private Integer status;
+
+	/**
+	 * 有效 禁止登录
+	 */
 	private String state;
+
+	/**
+	 * 角色
+	 */
+	private String role;
 
 	public String getId() {
 		return id;
@@ -94,5 +104,21 @@ public class UserDto  implements Serializable{
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 }

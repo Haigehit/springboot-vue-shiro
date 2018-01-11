@@ -53,4 +53,13 @@ public interface UserService extends IService<User> {
      * @date: 2017/12/27
      */
     List<User> checkUser(String name, String pass);
+
+    /**
+     * 修改用户状态
+     *
+     * @param id
+     * @param type
+     * @return
+     */
+    Object editUserStatus(String id, Integer type);
 }

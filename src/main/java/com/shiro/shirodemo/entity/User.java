@@ -47,7 +47,7 @@ public class User extends Model<User> {
     /**
      * 1:有效，0:禁止登录
      */
-	private Long status;
+	private Integer status;
 
 	@TableField(exist = false)
     /**
@@ -60,6 +60,12 @@ public class User extends Model<User> {
 	 * 角色名称
 	 */
 	private String roleName;
+
+	@TableField(exist = false)
+	/**
+	 * 角色类型 1 超级管理员  2 普通用户
+	 */
+	private Integer type;
 
 
 	public String getId() {
@@ -118,11 +124,11 @@ public class User extends Model<User> {
         this.rid = rid;
     }
 
-    public Long getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(Long status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -132,6 +138,14 @@ public class User extends Model<User> {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public static final String ID = "id";

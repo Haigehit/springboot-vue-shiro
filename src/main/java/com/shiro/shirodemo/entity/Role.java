@@ -27,7 +27,7 @@ public class Role extends Model<Role> {
     /**
      * 角色类型
      */
-	private String type;
+    private Integer type;
 
 	/**
 	 * 角色描述
@@ -51,13 +51,13 @@ public class Role extends Model<Role> {
 		this.name = name;
 	}
 
-	public String getType() {
-		return type;
-	}
+    public Integer getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
 	public String getDescription() {
 		return description;

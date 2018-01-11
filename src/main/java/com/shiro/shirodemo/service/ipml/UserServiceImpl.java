@@ -14,6 +14,7 @@ import com.shiro.shirodemo.pojo.vo.UserVo;
 import com.shiro.shirodemo.service.UserRoleService;
 import com.shiro.shirodemo.service.UserService;
 import com.shiro.shirodemo.utils.JsonResult;
+import com.shiro.shirodemo.utils.ResultUtil;
 import com.xiaoleilu.hutool.crypto.SecureUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -107,6 +108,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
    public  List<User> checkUser(String name, String pass) {
        return super.baseMapper.checkUser(name,pass);
    }
+
+    /**
+     * 修改用户状态
+     *
+     * @param id
+     * @param type
+     * @return
+     */
+    public Object editUserStatus(String id, Integer type) {
+        User user = new User();
+        user.setId(id);
+        user.setStatus(type);
+        Integer row = super.baseMapper.updateById(user);
+        return row > 0 ? ResultUtil.result(EnumCode.OK.getValue(), type == 0 ? "已禁止登陆" : "已允许登陆") : ResultUtil.result(EnumCode.INTERNAL_SERVER_ERROR.getValue(), "修改失败");
+    }
 
 
 }

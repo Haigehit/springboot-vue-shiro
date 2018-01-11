@@ -19,6 +19,7 @@
 		u.nickname AS userName,
 		u.email,
 		u.create_time AS createTime,
+		u.status,
 		(
 		IF (
 		u.`status`,
@@ -26,27 +27,32 @@
 		'禁止登陆'
 		)
 		) AS state,
-		u.last_login_time AS lastLoginTime
+		u.last_login_time AS lastLoginTime,
+		r.description AS role
 		FROM
 		sys_user AS u
-		WHERE (1=1)
+		INNER JOIN sys_user_role ur ON u.id = ur.uid
+		INNER JOIN sys_role r ON ur.rid = r.id
+		WHERE
+		r.type = #{dto.type}
 		<if test="''!= dto.keyword">
         AND u.nickname LIKE CONCAT('%',#{dto.keyword},'%')
 		</if>
 	</select>
 
 	<select id="checkUser" resultMap="BaseResultMap">
-	SELECT
+		SELECT
 		usr.id,
 		usr.nickname,
-		usr.pswd,
 		usr.`status`,
+		usr.pswd,
 		ur.rid,
-		r.`name` AS roleName
-	FROM
+		r.`name` AS roleName,
+		r.type
+		FROM
 		sys_user AS usr
-	LEFT JOIN sys_user_role AS ur ON usr.id = ur.uid
-	INNER JOIN sys_role AS r ON ur.rid = r.id
+		LEFT JOIN sys_user_role AS ur ON usr.id = ur.uid
+		INNER JOIN sys_role AS r ON ur.rid = r.id
 		WHERE
         usr.pswd = #{pass} AND usr.nickname = #{name}
 	</select>

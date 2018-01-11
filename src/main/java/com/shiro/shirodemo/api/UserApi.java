@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.shiro.shirodemo.Enum.EnumCode;
+import com.shiro.shirodemo.Enum.EnumRoleType;
 import com.shiro.shirodemo.entity.User;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.UserDto;
@@ -48,6 +49,7 @@ public class UserApi {
     @RequestMapping(value = "/findUserByPage",method = RequestMethod.GET)
     public Object findUserByPage(ParamsDto dto) {
         Page<UserDto> page = new Page<>(dto.getStartPage(),dto.getPageSize());
+        dto.setType(EnumRoleType.USER.getValue());
         List<UserDto> list = userService.findUserByPage(page,dto);
         return JsonResult.result(EnumCode.OK.getValue(),"请求成功", list,page.getTotal());
     }
@@ -75,5 +77,19 @@ public class UserApi {
             return JsonResult.result(EnumCode.BAD_REQUEST.getValue(),EnumCode.BAD_REQUEST.getText());
         }
         return userService.delUsers(dto.getIds());
+    }
+
+    /**
+     * 修改用户状态
+     *
+     * @param dto
+     * @return
+     */
+    @RequestMapping(value = "/editUserStatus", method = RequestMethod.POST)
+    public Object editUserStatus(ParamsDto dto) {
+        if (StringUtils.isEmpty(dto.getId()) || null == dto.getType()) {
+            return JsonResult.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
+        }
+        return userService.editUserStatus(dto.getId(), dto.getType());
     }
 }
