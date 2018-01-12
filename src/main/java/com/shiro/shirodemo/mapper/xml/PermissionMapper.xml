@@ -67,16 +67,6 @@
 		WHERE permis.fatherId = '0'
 	</select>
 
-    <!--查询所有父级菜单绑定树形-->
-    <select id="findBasePermission" resultType="com.shiro.shirodemo.pojo.dto.PermisDto">
-        SELECT
-        permis.id,
-        permis.`name`
-        FROM
-        sys_permission permis
-        WHERE permis.fatherId = '0'
-    </select>
-
     <!--根据父级id查询菜单-->
     <select id="findPermissionByFatherId" resultType="com.shiro.shirodemo.pojo.dto.PermisDto">
         SELECT
