@@ -4,12 +4,14 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.entity.Attribute;
 import com.shiro.shirodemo.entity.AttributeDetail;
+import com.shiro.shirodemo.entity.LoginLog;
 import com.shiro.shirodemo.entity.OperatingRecord;
 import com.shiro.shirodemo.pojo.dto.AttributeDetailDto;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.vo.AttributeDetailVo;
 import com.shiro.shirodemo.service.AttributeDetailService;
 import com.shiro.shirodemo.service.AttributeService;
+import com.shiro.shirodemo.service.LoginLogService;
 import com.shiro.shirodemo.service.OperatingRecordService;
 import com.shiro.shirodemo.utils.JsonResult;
 import com.shiro.shirodemo.utils.ResultUtil;
@@ -45,6 +47,9 @@ public class SysApi {
      * 操作记录
      */
     private OperatingRecordService operatingRecordService;
+
+    @Autowired
+    private LoginLogService loginLogService;
 
     /**
      * @desc: 查询属性
@@ -155,6 +160,43 @@ public class SysApi {
         List<OperatingRecord> list = operatingRecordService.findOperatingRecordByPage(page,dto);
         return ResultUtil.result(EnumCode.OK.getValue(),EnumCode.OK.getText(),list,page.getTotal());
 
+    }
+
+    /**
+     * 用户登录日志
+     *
+     * @param dto
+     * @return
+     */
+    @RequestMapping(value = "/findUserLoginLogByPage", method = RequestMethod.GET)
+    public Object findUserLoginLogByPage(ParamsDto dto) {
+
+        Page<LoginLog> page = new Page<LoginLog>(dto.getStartPage(), dto.getPageSize());
+        List<LoginLog> list = loginLogService.findUserLoginLogByPage(page, dto);
+        return ResultUtil.result(EnumCode.OK.getValue(), EnumCode.OK.getText(), list, page.getTotal());
+
+    }
+
+    /**
+     * 统计用户登录
+     *
+     * @author: jwy
+     * @date: 2018/1/11
+     */
+    @RequestMapping(value = "/findUserLoginTotal", method = RequestMethod.GET)
+    public Object findUserLoginTotal() {
+        return loginLogService.findUserLoginTotal();
+    }
+
+    /**
+     * 访问统计
+     *
+     * @author: jwy
+     * @date: 2018/1/11
+     */
+    @RequestMapping(value = "/findUserReqTotal", method = RequestMethod.GET)
+    public Object findUserReqTotal() {
+        return operatingRecordService.findUserReqTotal();
     }
 
 

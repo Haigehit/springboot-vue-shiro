@@ -20,7 +20,10 @@ public class BaseApi {
 
         Subject subject = SecurityUtils.getSubject();
         User user = (User)subject.getPrincipal();
-        return user.getNickname();
+        if (null == user) {
+            return null;
+        }
+        return null == user.getNickname() ? null : user.getNickname();
 
     }
 
@@ -32,7 +35,10 @@ public class BaseApi {
 
         Subject subject = SecurityUtils.getSubject();
         User user = (User)subject.getPrincipal();
-        return user.getId();
+        if (null == user) {
+            return null;
+        }
+        return null == user.getId() ? null : user.getId();
 
     }
 
@@ -44,7 +50,10 @@ public class BaseApi {
 
         Subject subject = SecurityUtils.getSubject();
         User user = (User)subject.getPrincipal();
-        return user.getRid();
+        if (null == user) {
+            return null;
+        }
+        return null == user.getRid() ? null : user.getRid();
 
     }
 
@@ -56,7 +65,10 @@ public class BaseApi {
 
         Subject subject = SecurityUtils.getSubject();
         User user = (User)subject.getPrincipal();
-        return user.getRoleName();
+        if (null == user) {
+            return null;
+        }
+        return null == user.getRoleName() ? null : user.getRoleName();
 
     }
 

@@ -3,6 +3,7 @@ package com.shiro.shirodemo.service.ipml;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.shiro.shirodemo.Enum.EnumCode;
+import com.shiro.shirodemo.entity.LoginLog;
 import com.shiro.shirodemo.entity.RolePermission;
 import com.shiro.shirodemo.entity.User;
 import com.shiro.shirodemo.entity.UserRole;
@@ -11,15 +12,21 @@ import com.shiro.shirodemo.mapper.UserMapper;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.UserDto;
 import com.shiro.shirodemo.pojo.vo.UserVo;
+import com.shiro.shirodemo.service.LoginLogService;
 import com.shiro.shirodemo.service.UserRoleService;
 import com.shiro.shirodemo.service.UserService;
 import com.shiro.shirodemo.utils.JsonResult;
 import com.shiro.shirodemo.utils.ResultUtil;
 import com.xiaoleilu.hutool.crypto.SecureUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +45,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private UserRoleService userRoleService;
+
+    @Autowired
+    private LoginLogService loginLogService;
+
+
+    /**
+     * 登录
+     *
+     * @param name
+     * @param pass
+     * @param session
+     * @param request
+     * @return
+     */
+    public Object login(String name, String pass, HttpSession session, HttpServletRequest request) {
+
+        UsernamePasswordToken upToken = new UsernamePasswordToken(name, SecureUtil.md5(pass));
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(upToken);
+        User user = (User) subject.getPrincipal();
+        session.setAttribute("user", user);
+        User viewUser = new User();
+        viewUser.setNickname(user.getNickname());
+
+        LoginLog loginLog = new LoginLog();
+        loginLog.setUid(user.getId());
+        loginLog.setLoginTime(new Date());
+        loginLog.setLoginIP(request.getRemoteAddr());
+        loginLog.setLoginTotal(loginLogService.findMaxLoginTatalByUserId(user.getId()));
+        loginLogService.insert(loginLog);
+
+
+        return JsonResult.result(EnumCode.OK.getValue(), "登陆成功", viewUser);
+    }
 
     /**
      * @desc: 新增用户

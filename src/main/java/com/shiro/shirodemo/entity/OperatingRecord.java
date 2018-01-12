@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author jwy
- * @since 2018-01-07
+ * @since 2018-01-11
  */
 @TableName("sys_operating_record")
 public class OperatingRecord extends Model<OperatingRecord> {
@@ -35,16 +35,19 @@ public class OperatingRecord extends Model<OperatingRecord> {
      */
 	private String params;
     /**
-     * 请求方式
+     * 请示方式
      */
 	private String method;
 	@TableField("create_time")
 	private Date createTime;
-
-	/**
-	 * 标志
-	 */
-	private String flag;
+    /**
+     * 用户id
+     */
+    private String uid;
+    /**
+     * 标识
+     */
+    private String flag;
 
 
 	public String getId() {
@@ -95,6 +98,14 @@ public class OperatingRecord extends Model<OperatingRecord> {
 		this.createTime = createTime;
 	}
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
 	public String getFlag() {
 		return flag;
 	}
@@ -115,6 +126,8 @@ public class OperatingRecord extends Model<OperatingRecord> {
 
 	public static final String CREATE_TIME = "create_time";
 
+    public static final String UID = "uid";
+
 	public static final String FLAG = "flag";
 
 	@Override
@@ -131,7 +144,8 @@ public class OperatingRecord extends Model<OperatingRecord> {
 			", params=" + params +
 			", method=" + method +
 			", createTime=" + createTime +
-			", flag=" + flag +
+                ", uid=" + uid +
+                ", flag=" + flag +
 			"}";
 	}
 }

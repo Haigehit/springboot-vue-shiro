@@ -10,29 +10,64 @@
 		<result column="params" property="params" />
 		<result column="method" property="method" />
 		<result column="create_time" property="createTime" />
+		<result column="uid" property="uid"/>
 		<result column="flag" property="flag" />
 	</resultMap>
 
 	<select id="findOperatingRecordByPage" resultMap="BaseResultMap">
-	SELECT
+		SELECT
 		op_r.id,
 		op_r.requestUrl,
 		op_r.remoteAddr,
 		op_r.params,
 		op_r.method,
 		op_r.create_time,
-		op_r.flag
-	FROM
-		`sys_operating_record` op_r
+		op_r.flag,
+		IFNULL(u.nickname, '未知') AS userName
+		FROM
+		sys_operating_record AS op_r
+		LEFT JOIN sys_user u ON op_r.uid = u.id
 		WHERE
 		(1 = 1)
 		<if test="''!=dto.keyword">
 			AND (op_r.requestUrl LIKE CONCAT('%',#{dto.keyword},'%')
 			OR op_r.remoteAddr LIKE CONCAT('%',#{dto.keyword},'%')
 			OR op_r.method LIKE CONCAT('%',#{dto.keyword},'%')
-			OR op_r.flag LIKE CONCAT('%',#{dto.keyword},'%'))
+			OR op_r.flag LIKE CONCAT('%',#{dto.keyword},'%')
+			OR u.nickname LIKE CONCAT('%',#{dto.keyword},'%'))
 		</if>
 		ORDER BY op_r.create_time DESC
+	</select>
+
+	<select id="findAllRequstCount" resultType="com.shiro.shirodemo.pojo.dto.ReqTotalDto">
+	SELECT
+		rec.method AS Na,
+		COUNT(*) AS total,
+		'1' AS type
+	FROM
+		`sys_operating_record` AS rec
+	GROUP BY
+		rec.method
+	UNION ALL
+	SELECT
+		u.nickname AS Na,
+		COUNT(*) AS total,
+		'2' AS type
+	FROM
+		sys_operating_record AS rec1
+	INNER JOIN sys_user u ON rec1.uid = u.id
+	GROUP BY
+		u.nickname
+	UNION ALL
+	SELECT
+		'未知' AS Na,
+		COUNT(*) AS total,
+		'2' AS type
+	FROM
+		sys_operating_record AS rec2
+	WHERE
+		rec2.uid IS NULL
+	OR rec2.uid NOT IN (SELECT id FROM sys_user)
 	</select>
 
 </mapper>

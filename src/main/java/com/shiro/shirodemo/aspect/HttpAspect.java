@@ -138,7 +138,7 @@ public class HttpAspect extends BaseApi{
         or.setMethod(method);
         or.setParams(args);
         or.setCreateTime(new Date());
-
+        or.setUid(super.getUserId());
 
         Integer count = permissionService.findCountByUrl(request.getRequestURI().replaceAll(request.getContextPath(),""));
         if (count != 0){
@@ -148,6 +148,7 @@ public class HttpAspect extends BaseApi{
                 operatingRecordService.insert(or);
                 throw new MyException(JsonResult.result(EnumCode.FORBIDDEN.getValue(),EnumCode.FORBIDDEN.getText()));
             }
+
             Integer row = rolePermissionService.findCountByRole(roleId, request.getRequestURI().replaceAll(request.getContextPath(),""));
             if (row == 0 && !super.getRoleName().equals("admin")) {
                 or.setFlag("授权不通过");

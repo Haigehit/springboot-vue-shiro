@@ -7,6 +7,8 @@ import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.UserDto;
 import com.shiro.shirodemo.pojo.vo.UserVo;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -18,6 +20,17 @@ import java.util.List;
  * @since 2017-12-16
  */
 public interface UserService extends IService<User> {
+
+    /**
+     * 登录
+     *
+     * @param name
+     * @param pass
+     * @param session
+     * @param request
+     * @return
+     */
+    Object login(String name, String pass, HttpSession session, HttpServletRequest request);
 
     /**
      * @desc: 新增用户

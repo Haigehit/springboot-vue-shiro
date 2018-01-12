@@ -24,4 +24,12 @@ public interface OperatingRecordService extends IService<OperatingRecord> {
      * @return
      */
     List<OperatingRecord> findOperatingRecordByPage(Page<OperatingRecord> page, ParamsDto dto);
+
+    /**
+     * 访问统计
+     *
+     * @author: jwy
+     * @date: 2018/1/11
+     */
+    Object findUserReqTotal();
 }
