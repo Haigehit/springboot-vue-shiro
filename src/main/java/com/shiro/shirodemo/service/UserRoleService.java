@@ -1,7 +1,7 @@
 package com.shiro.shirodemo.service;
 
-import com.shiro.shirodemo.entity.UserRole;
 import com.baomidou.mybatisplus.service.IService;
+import com.shiro.shirodemo.entity.UserRole;
 
 /**
  * <p>

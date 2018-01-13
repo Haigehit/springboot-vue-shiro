@@ -1,21 +1,13 @@
 package com.shiro.shirodemo.api;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.Enum.EnumRoleType;
-import com.shiro.shirodemo.entity.User;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.UserDto;
 import com.shiro.shirodemo.pojo.vo.UserVo;
 import com.shiro.shirodemo.service.UserService;
-import com.shiro.shirodemo.utils.JsonResult;
 import com.shiro.shirodemo.utils.ResultUtil;
-import com.xiaoleilu.hutool.crypto.SecureUtil;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -51,7 +43,7 @@ public class UserApi {
         Page<UserDto> page = new Page<>(dto.getStartPage(),dto.getPageSize());
         dto.setType(EnumRoleType.USER.getValue());
         List<UserDto> list = userService.findUserByPage(page,dto);
-        return JsonResult.result(EnumCode.OK.getValue(),"请求成功", list,page.getTotal());
+        return ResultUtil.result(EnumCode.OK.getValue(), "请求成功", list, page.getTotal());
     }
 
     /**
@@ -74,7 +66,7 @@ public class UserApi {
     @RequestMapping(value = "/delUsers",method = RequestMethod.POST)
     public Object delUsers(ParamsDto dto) {
         if (null == dto.getIds() || dto.getIds().length == 0) {
-            return JsonResult.result(EnumCode.BAD_REQUEST.getValue(),EnumCode.BAD_REQUEST.getText());
+            return ResultUtil.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
         }
         return userService.delUsers(dto.getIds());
     }
@@ -88,7 +80,7 @@ public class UserApi {
     @RequestMapping(value = "/editUserStatus", method = RequestMethod.POST)
     public Object editUserStatus(ParamsDto dto) {
         if (StringUtils.isEmpty(dto.getId()) || null == dto.getType()) {
-            return JsonResult.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
+            return ResultUtil.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
         }
         return userService.editUserStatus(dto.getId(), dto.getType());
     }

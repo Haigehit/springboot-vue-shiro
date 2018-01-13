@@ -7,7 +7,7 @@ import com.shiro.shirodemo.mapper.RolePermissionMapper;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.RolePermisVo;
 import com.shiro.shirodemo.service.RolePermissionService;
-import com.shiro.shirodemo.utils.JsonResult;
+import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,7 +59,7 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
             rp.setPid(permisIds[i]);
             super.baseMapper.insert(rp);
         }
-        return JsonResult.result(EnumCode.OK.getValue(),"保存成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "保存成功");
     }
 
     /**

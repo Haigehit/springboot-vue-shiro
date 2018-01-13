@@ -13,7 +13,15 @@ import java.util.List;
  */
 public class PermisDto {
     private String id;
+
+    /**
+     * 菜单名称
+     */
     private String name;
+
+    /**
+     * 子菜单
+     */
     private ArrayList<PermisDto> children;
 
     public String getId() {

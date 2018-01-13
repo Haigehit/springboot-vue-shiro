@@ -1,9 +1,8 @@
 package com.shiro.shirodemo.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.shiro.shirodemo.entity.Attribute;
 import com.baomidou.mybatisplus.service.IService;
-import com.shiro.shirodemo.entity.AttributeDetail;
+import com.shiro.shirodemo.entity.Attribute;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 
 import java.util.List;

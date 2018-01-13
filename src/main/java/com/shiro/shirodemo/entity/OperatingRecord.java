@@ -6,6 +6,8 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 
 /**
@@ -48,6 +50,12 @@ public class OperatingRecord extends Model<OperatingRecord> {
      * 标识
      */
     private String flag;
+
+	@TableField(exist = false)
+	/**
+	 * 用户名称
+	 */
+	private String userName;
 
 
 	public String getId() {
@@ -112,6 +120,14 @@ public class OperatingRecord extends Model<OperatingRecord> {
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public static final String ID = "id";

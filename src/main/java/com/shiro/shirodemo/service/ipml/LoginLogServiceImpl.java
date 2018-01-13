@@ -1,16 +1,17 @@
 package com.shiro.shirodemo.service.ipml;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.entity.LoginLog;
 import com.shiro.shirodemo.mapper.LoginLogMapper;
 import com.shiro.shirodemo.pojo.dto.LoginTotalDto;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.service.LoginLogService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.shiro.shirodemo.utils.JsonResult;
+import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,9 +59,11 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
             strName[i] = loignList.get(i).getUserName();
             itotal[i] = loignList.get(i).getLoginTotal();
         }
+        List<LoginTotalDto> listLoginTotal = new ArrayList<>();
         LoginTotalDto loginTotalDto = new LoginTotalDto();
         loginTotalDto.setName(strName);
         loginTotalDto.setTotal(itotal);
-        return JsonResult.result(EnumCode.OK.getValue(), EnumCode.OK.getText(), loginTotalDto);
+        listLoginTotal.add(loginTotalDto);
+        return ResultUtil.result(EnumCode.OK.getValue(), EnumCode.OK.getText(), listLoginTotal);
     }
 }

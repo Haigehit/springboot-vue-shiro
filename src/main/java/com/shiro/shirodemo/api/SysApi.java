@@ -13,7 +13,6 @@ import com.shiro.shirodemo.service.AttributeDetailService;
 import com.shiro.shirodemo.service.AttributeService;
 import com.shiro.shirodemo.service.LoginLogService;
 import com.shiro.shirodemo.service.OperatingRecordService;
-import com.shiro.shirodemo.utils.JsonResult;
 import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -110,7 +109,7 @@ public class SysApi {
     @RequestMapping(value = "/delAttributes",method = RequestMethod.POST)
     public Object delAttributes(ParamsDto dto) {
         if (null == dto.getIds() || dto.getIds().length == 0) {
-            return JsonResult.result(EnumCode.BAD_REQUEST.getValue(),EnumCode.BAD_REQUEST.getText());
+            return ResultUtil.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
         }
         return attributeService.delAttributes(dto.getIds());
     }
@@ -124,7 +123,7 @@ public class SysApi {
     @RequestMapping(value = "/delAttributeDetails",method = RequestMethod.POST)
     public Object delAttributeDetails(ParamsDto dto) {
         if (null == dto.getIds() || dto.getIds().length == 0) {
-            return JsonResult.result(EnumCode.BAD_REQUEST.getValue(),EnumCode.BAD_REQUEST.getText());
+            return ResultUtil.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
         }
         return attributeDetailService.delAttributeDetails(dto.getIds());
     }
@@ -138,13 +137,13 @@ public class SysApi {
     @RequestMapping(value = "/findAttributeDetailByAttrId",method = RequestMethod.GET)
     public Object selAttributeDetailsByAttrId(ParamsDto dto) {
         if (StringUtils.isEmpty(dto.getId())) {
-            return JsonResult.result(EnumCode.BAD_REQUEST.getValue(),EnumCode.BAD_REQUEST.getText());
+            return ResultUtil.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
         }
         List<AttributeDetailDto> list = attributeDetailService.findAttributeDetailByAttrId(dto.getId());
         if (null == list || list.isEmpty()) {
-            return JsonResult.result(EnumCode.GONE.getValue(),"没有记录");
+            return ResultUtil.result(EnumCode.GONE.getValue(), "没有记录");
         }
-        return JsonResult.result(EnumCode.OK.getValue(),EnumCode.OK.getText(),list);
+        return ResultUtil.result(EnumCode.OK.getValue(), EnumCode.OK.getText(), list);
     }
 
     /**

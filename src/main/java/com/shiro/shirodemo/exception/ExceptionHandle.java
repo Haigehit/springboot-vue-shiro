@@ -5,7 +5,7 @@ import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.api.base.BaseApi;
 import com.shiro.shirodemo.entity.OperatingRecord;
 import com.shiro.shirodemo.service.OperatingRecordService;
-import com.shiro.shirodemo.utils.JsonResult;
+import com.shiro.shirodemo.utils.ResultUtil;
 import com.shiro.shirodemo.utils.ResultUtil;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.AuthenticationException;
@@ -61,11 +61,11 @@ public class ExceptionHandle extends BaseApi {
            return myException.getResult();
         } else if (e instanceof AuthenticationException) {
             AuthenticationException authenticationException = (AuthenticationException)e;
-            return JSONArray.toJSON(JsonResult.result(EnumCode.LOGIN_FAIL.getValue(),authenticationException.getMessage()));
+            return JSONArray.toJSON(ResultUtil.result(EnumCode.LOGIN_FAIL.getValue(), authenticationException.getMessage()));
         }
         else {
             log.info("系统异常 {}",e);
-            return JsonResult.result(-1,"未知错误");
+            return ResultUtil.result(-1, "未知错误");
         }
     }
 }

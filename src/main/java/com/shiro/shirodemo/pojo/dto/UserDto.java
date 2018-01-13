@@ -31,13 +31,11 @@ public class UserDto  implements Serializable{
      */
 	private String email;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     /**
      * 创建时间
      */
 	private Date createTime;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     /**
      * 最后登录时间
      */

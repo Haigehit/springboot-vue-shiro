@@ -8,7 +8,6 @@ import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.PermisDto;
 import com.shiro.shirodemo.pojo.vo.PermisVo;
 import com.shiro.shirodemo.service.PermissionService;
-import com.shiro.shirodemo.utils.JsonResult;
 import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -62,7 +61,7 @@ public class PermisApi extends BaseApi{
     @RequestMapping(value = "/delPermis",method = RequestMethod.POST)
     public Object delPermis(ParamsDto dto) {
         if (null == dto.getIds() || dto.getIds().length == 0) {
-            return JsonResult.result(EnumCode.BAD_REQUEST.getValue(),EnumCode.BAD_REQUEST.getText());
+            return ResultUtil.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
         }
         return permissionService.delPermis(dto.getIds());
     }

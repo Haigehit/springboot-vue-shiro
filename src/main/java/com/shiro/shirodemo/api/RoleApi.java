@@ -9,7 +9,6 @@ import com.shiro.shirodemo.pojo.dto.RolePermisVo;
 import com.shiro.shirodemo.pojo.vo.RoleVo;
 import com.shiro.shirodemo.service.RolePermissionService;
 import com.shiro.shirodemo.service.RoleService;
-import com.shiro.shirodemo.utils.JsonResult;
 import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -64,7 +63,7 @@ public class RoleApi {
     @RequestMapping(value = "/delRoles",method = RequestMethod.POST)
     public Object delRoles(ParamsDto dto) {
         if (null == dto.getIds() || dto.getIds().length == 0) {
-            return JsonResult.result(EnumCode.BAD_REQUEST.getValue(),EnumCode.BAD_REQUEST.getText());
+            return ResultUtil.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
         }
         return roleService.delRole(dto.getIds());
     }
@@ -78,7 +77,7 @@ public class RoleApi {
     @RequestMapping(value = "/findRolesPermisByRole",method = RequestMethod.GET)
     public Object findRolesPermisByRole(ParamsDto dto) {
         if (null == dto.getId()) {
-            return JsonResult.result(EnumCode.BAD_REQUEST.getValue(),EnumCode.BAD_REQUEST.getText());
+            return ResultUtil.result(EnumCode.BAD_REQUEST.getValue(), EnumCode.BAD_REQUEST.getText());
         }
         List<RolePermission> list = rolePermissionService.findRolesPermisByRole(dto);
         String[] arr = new String[list.size()];

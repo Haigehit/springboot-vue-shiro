@@ -6,6 +6,7 @@ import com.shiro.shirodemo.entity.User;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.UserDto;
+import com.shiro.shirodemo.pojo.dto.UserInfoDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -36,5 +37,5 @@ public interface UserMapper extends BaseMapper<User> {
      * @author: jwy
      * @date: 2017/12/27
      */
-    List<User> checkUser(@Param("name") String name,@Param("pass") String pass);
+    List<UserInfoDto> checkUser(@Param("name") String name, @Param("pass") String pass);
 }

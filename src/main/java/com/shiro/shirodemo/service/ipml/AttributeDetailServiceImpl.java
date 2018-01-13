@@ -1,17 +1,15 @@
 package com.shiro.shirodemo.service.ipml;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.shiro.shirodemo.Enum.EnumCode;
-import com.shiro.shirodemo.entity.Attribute;
 import com.shiro.shirodemo.entity.AttributeDetail;
 import com.shiro.shirodemo.mapper.AttributeDetailMapper;
 import com.shiro.shirodemo.pojo.dto.AttributeDetailDto;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.vo.AttributeDetailVo;
 import com.shiro.shirodemo.service.AttributeDetailService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.shiro.shirodemo.utils.JsonResult;
-import org.apache.ibatis.annotations.Param;
+import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,9 +47,9 @@ public class AttributeDetailServiceImpl extends ServiceImpl<AttributeDetailMappe
         attributeDetail.setName(vo.getName());
         Integer rows = super.baseMapper.insert(attributeDetail);
       if (rows > 0) {
-          return JsonResult.result(EnumCode.OK.getValue(),"新增成功");
+          return ResultUtil.result(EnumCode.OK.getValue(), "新增成功");
       }
-      return JsonResult.result(EnumCode.INTERNAL_SERVER_ERROR.getValue(),"新增失败");
+        return ResultUtil.result(EnumCode.INTERNAL_SERVER_ERROR.getValue(), "新增失败");
     }
 
     /**
@@ -76,6 +74,6 @@ public class AttributeDetailServiceImpl extends ServiceImpl<AttributeDetailMappe
             super.baseMapper.deleteById(id);
         }
 
-        return JsonResult.result(EnumCode.OK.getValue(),"删除成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "删除成功");
     }
 }

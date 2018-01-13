@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.service.IService;
 import com.shiro.shirodemo.entity.User;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.UserDto;
+import com.shiro.shirodemo.pojo.dto.UserInfoDto;
 import com.shiro.shirodemo.pojo.vo.UserVo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +66,7 @@ public interface UserService extends IService<User> {
      * @author: jwy
      * @date: 2017/12/27
      */
-    List<User> checkUser(String name, String pass);
+    List<UserInfoDto> checkUser(String name, String pass);
 
     /**
      * 修改用户状态

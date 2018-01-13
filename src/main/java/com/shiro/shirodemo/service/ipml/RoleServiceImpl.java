@@ -1,15 +1,14 @@
 package com.shiro.shirodemo.service.ipml;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.shiro.shirodemo.Enum.EnumCode;
-import com.shiro.shirodemo.entity.Permission;
 import com.shiro.shirodemo.entity.Role;
 import com.shiro.shirodemo.mapper.RoleMapper;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.vo.RoleVo;
 import com.shiro.shirodemo.service.RoleService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.shiro.shirodemo.utils.JsonResult;
+import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +45,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         r.setName(vo.getName());
         r.setDescription(vo.getDescription());
         super.baseMapper.insert(r);
-        return JsonResult.result(EnumCode.OK.getValue(),"新增成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "新增成功");
     }
 
     /**
@@ -60,7 +59,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         for (String id : ids) {
             super.baseMapper.deleteById(id);
         }
-        return JsonResult.result(EnumCode.OK.getValue(),"删除成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "删除成功");
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.shiro.shirodemo.api.base;
 
 import com.shiro.shirodemo.entity.User;
+import com.shiro.shirodemo.pojo.dto.UserInfoDto;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
@@ -19,11 +20,11 @@ public class BaseApi {
     protected String getUserName() {
 
         Subject subject = SecurityUtils.getSubject();
-        User user = (User)subject.getPrincipal();
+        UserInfoDto user = (UserInfoDto) subject.getPrincipal();
         if (null == user) {
             return null;
         }
-        return null == user.getNickname() ? null : user.getNickname();
+        return null == user.getUsername() ? null : user.getUsername();
 
     }
 
@@ -34,7 +35,7 @@ public class BaseApi {
     protected String getUserId() {
 
         Subject subject = SecurityUtils.getSubject();
-        User user = (User)subject.getPrincipal();
+        UserInfoDto user = (UserInfoDto) subject.getPrincipal();
         if (null == user) {
             return null;
         }
@@ -49,11 +50,11 @@ public class BaseApi {
     protected String getRoleId() {
 
         Subject subject = SecurityUtils.getSubject();
-        User user = (User)subject.getPrincipal();
+        UserInfoDto user = (UserInfoDto) subject.getPrincipal();
         if (null == user) {
             return null;
         }
-        return null == user.getRid() ? null : user.getRid();
+        return null == user.getRoleid() ? null : user.getRoleid();
 
     }
 
@@ -64,7 +65,7 @@ public class BaseApi {
     protected String getRoleName() {
 
         Subject subject = SecurityUtils.getSubject();
-        User user = (User)subject.getPrincipal();
+        UserInfoDto user = (UserInfoDto) subject.getPrincipal();
         if (null == user) {
             return null;
         }

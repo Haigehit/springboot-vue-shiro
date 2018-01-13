@@ -1,6 +1,7 @@
 package com.shiro.shirodemo.service.ipml;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.entity.Permission;
 import com.shiro.shirodemo.mapper.PermissionMapper;
@@ -8,9 +9,7 @@ import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.PermisDto;
 import com.shiro.shirodemo.pojo.vo.PermisVo;
 import com.shiro.shirodemo.service.PermissionService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.shiro.shirodemo.utils.JsonResult;
-import org.apache.ibatis.annotations.Param;
+import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         p.setCreateTime(new Date());
         p.setCreater(vo.getUserName());
         baseMapper.insert(p);
-        return JsonResult.result(EnumCode.OK.getValue(),"新增成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "新增成功");
 
     }
 
@@ -69,7 +68,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         for (String id : ids) {
            super.baseMapper.deleteById(id);
         }
-        return JsonResult.result(EnumCode.OK.getValue(),"删除成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "删除成功");
     }
 
     /**

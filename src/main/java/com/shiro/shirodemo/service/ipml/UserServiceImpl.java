@@ -1,21 +1,21 @@
 package com.shiro.shirodemo.service.ipml;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.entity.LoginLog;
-import com.shiro.shirodemo.entity.RolePermission;
 import com.shiro.shirodemo.entity.User;
 import com.shiro.shirodemo.entity.UserRole;
 import com.shiro.shirodemo.exception.MyException;
 import com.shiro.shirodemo.mapper.UserMapper;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.UserDto;
+import com.shiro.shirodemo.pojo.dto.UserInfoDto;
 import com.shiro.shirodemo.pojo.vo.UserVo;
 import com.shiro.shirodemo.service.LoginLogService;
 import com.shiro.shirodemo.service.UserRoleService;
 import com.shiro.shirodemo.service.UserService;
-import com.shiro.shirodemo.utils.JsonResult;
 import com.shiro.shirodemo.utils.ResultUtil;
 import com.xiaoleilu.hutool.crypto.SecureUtil;
 import org.apache.shiro.SecurityUtils;
@@ -64,20 +64,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UsernamePasswordToken upToken = new UsernamePasswordToken(name, SecureUtil.md5(pass));
         Subject subject = SecurityUtils.getSubject();
         subject.login(upToken);
-        User user = (User) subject.getPrincipal();
-        session.setAttribute("user", user);
-        User viewUser = new User();
-        viewUser.setNickname(user.getNickname());
+        UserInfoDto userInfoDto = (UserInfoDto) subject.getPrincipal();
+        session.setAttribute("user", userInfoDto);
 
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", userInfoDto.getUsername());
+
+        // 登录日志
         LoginLog loginLog = new LoginLog();
-        loginLog.setUid(user.getId());
+        loginLog.setUid(userInfoDto.getId());
         loginLog.setLoginTime(new Date());
         loginLog.setLoginIP(request.getRemoteAddr());
-        loginLog.setLoginTotal(loginLogService.findMaxLoginTatalByUserId(user.getId()));
+        loginLog.setLoginTotal(loginLogService.findMaxLoginTatalByUserId(userInfoDto.getId())); // 登录总次数
         loginLogService.insert(loginLog);
 
 
-        return JsonResult.result(EnumCode.OK.getValue(), "登陆成功", viewUser);
+        return ResultUtil.result(EnumCode.OK.getValue(), "登陆成功", JSON.toJSON(map));
     }
 
     /**
@@ -94,7 +96,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         map.put("nickname",vo.getName().trim());
         List<User> list = super.baseMapper.selectByMap(map);
         if (list.size() > 0) {
-            throw  new MyException( JsonResult.result(EnumCode.BAD_REQUEST.getValue(),"昵称已经存在",null));
+            throw new MyException(ResultUtil.result(EnumCode.BAD_REQUEST.getValue(), "昵称已经存在", null));
         }
         User user = new User();
         user.setNickname(vo.getName());
@@ -109,9 +111,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Boolean result =  userRoleService.insert(ur);
 
         if (!result) {
-            throw new MyException(JsonResult.result(EnumCode.INTERNAL_SERVER_ERROR.getValue(),EnumCode.INTERNAL_SERVER_ERROR.getText(),null));
+            throw new MyException(ResultUtil.result(EnumCode.INTERNAL_SERVER_ERROR.getValue(), EnumCode.INTERNAL_SERVER_ERROR.getText(), null));
         }
-        return JsonResult.result(EnumCode.OK.getValue(),"新增成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "新增成功");
     }
 
     /**
@@ -137,7 +139,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         for (String id : ids) {
             baseMapper.deleteById(id);
         }
-        return JsonResult.result(EnumCode.OK.getValue(),"删除成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "删除成功");
     }
 
     /**
@@ -146,7 +148,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @author: jwy
      * @date: 2017/12/27
      */
-   public  List<User> checkUser(String name, String pass) {
+    public List<UserInfoDto> checkUser(String name, String pass) {
        return super.baseMapper.checkUser(name,pass);
    }
 

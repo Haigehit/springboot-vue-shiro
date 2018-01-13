@@ -40,15 +40,15 @@
 		</if>
 	</select>
 
-	<select id="checkUser" resultMap="BaseResultMap">
+	<select id="checkUser" resultType="com.shiro.shirodemo.pojo.dto.UserInfoDto">
 		SELECT
 		usr.id,
-		usr.nickname,
-		usr.`status`,
-		usr.pswd,
-		ur.rid,
+		usr.nickname AS username,
+		usr.`status` AS state,
+		usr.pswd AS password ,
+		ur.rid AS roleid,
 		r.`name` AS roleName,
-		r.type
+		r.type AS type
 		FROM
 		sys_user AS usr
 		LEFT JOIN sys_user_role AS ur ON usr.id = ur.uid

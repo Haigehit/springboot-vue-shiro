@@ -9,7 +9,7 @@ import com.shiro.shirodemo.pojo.dto.AttributeDetailDto;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.service.AttributeDetailService;
 import com.shiro.shirodemo.service.AttributeService;
-import com.shiro.shirodemo.utils.JsonResult;
+import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +48,7 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeMapper, Attribute
      */
     public Object addAttributes(Attribute attribute) {
         baseMapper.insert(attribute);
-        return JsonResult.result(EnumCode.OK.getValue(),"新增成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "新增成功");
     }
 
     /**
@@ -68,6 +68,6 @@ public class AttributeServiceImpl extends ServiceImpl<AttributeMapper, Attribute
                 }
             }
         }
-        return JsonResult.result(EnumCode.OK.getValue(),"删除成功");
+        return ResultUtil.result(EnumCode.OK.getValue(), "删除成功");
     }
 }

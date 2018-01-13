@@ -3,13 +3,11 @@ package com.shiro.shirodemo.aspect;
 import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.api.base.BaseApi;
 import com.shiro.shirodemo.entity.OperatingRecord;
-import com.shiro.shirodemo.entity.Permission;
-import com.shiro.shirodemo.entity.RolePermission;
 import com.shiro.shirodemo.exception.MyException;
 import com.shiro.shirodemo.service.OperatingRecordService;
 import com.shiro.shirodemo.service.PermissionService;
 import com.shiro.shirodemo.service.RolePermissionService;
-import com.shiro.shirodemo.utils.JsonResult;
+import com.shiro.shirodemo.utils.ResultUtil;
 import com.shiro.shirodemo.utils.ResultUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,7 +24,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @desc: Aspect
@@ -146,14 +143,14 @@ public class HttpAspect extends BaseApi{
             if (StringUtils.isEmpty(roleId)) {
                 or.setFlag("授权不通过");
                 operatingRecordService.insert(or);
-                throw new MyException(JsonResult.result(EnumCode.FORBIDDEN.getValue(),EnumCode.FORBIDDEN.getText()));
+                throw new MyException(ResultUtil.result(EnumCode.FORBIDDEN.getValue(), EnumCode.FORBIDDEN.getText()));
             }
 
             Integer row = rolePermissionService.findCountByRole(roleId, request.getRequestURI().replaceAll(request.getContextPath(),""));
             if (row == 0 && !super.getRoleName().equals("admin")) {
                 or.setFlag("授权不通过");
                 operatingRecordService.insert(or);
-                throw new MyException(JsonResult.result(EnumCode.FORBIDDEN.getValue(),EnumCode.FORBIDDEN.getText()));
+                throw new MyException(ResultUtil.result(EnumCode.FORBIDDEN.getValue(), EnumCode.FORBIDDEN.getText()));
             }
         }
         or.setFlag("授权通过");

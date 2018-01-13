@@ -1,6 +1,7 @@
 package com.shiro.shirodemo.service.ipml;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.entity.OperatingRecord;
 import com.shiro.shirodemo.mapper.OperatingRecordMapper;
@@ -8,8 +9,7 @@ import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.ReqTotalDto;
 import com.shiro.shirodemo.pojo.dto.RequstOprDto;
 import com.shiro.shirodemo.service.OperatingRecordService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.shiro.shirodemo.utils.JsonResult;
+import com.shiro.shirodemo.utils.ResultUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -73,6 +73,6 @@ public class OperatingRecordServiceImpl extends ServiceImpl<OperatingRecordMappe
         r.setArrName(arrNa);
         reqData3.add(r);
 
-        return JsonResult.result(EnumCode.OK.getValue(), EnumCode.OK.getText(), reqData3);
+        return ResultUtil.result(EnumCode.OK.getValue(), EnumCode.OK.getText(), reqData3);
     }
 }
