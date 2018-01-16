@@ -17,16 +17,20 @@
 	<select id="findOperatingRecordByPage" resultMap="BaseResultMap">
 		SELECT
 		op_r.id,
-		op_r.requestUrl,
 		op_r.remoteAddr,
 		op_r.params,
 		op_r.method,
 		op_r.create_time,
 		op_r.flag,
-		IFNULL(u.nickname, '未知') AS userName
+        IFNULL(u.nickname, '未知') AS userName,
+        IFNULL(
+        sys_permission.`name`,
+        op_r.requestUrl
+        ) AS permName
 		FROM
 		sys_operating_record AS op_r
-		LEFT JOIN sys_user u ON op_r.uid = u.id
+        LEFT JOIN sys_user AS u ON op_r.uid = u.id
+        LEFT JOIN sys_permission ON op_r.requestUrl = sys_permission.url
 		WHERE
 		(1 = 1)
 		<if test="''!=dto.keyword">

@@ -23,9 +23,14 @@ public class User extends Model<User> {
 
 	private String id;
     /**
+     * 头像
+     */
+    @TableField("head_portraits")
+    private String headPortraits;
+    /**
      * 用户昵称
      */
-	private String nickname;
+    private String nickname;
     /**
      * 邮箱|登录帐号
      */
@@ -66,6 +71,14 @@ public class User extends Model<User> {
 	 * 角色类型 1 超级管理员  2 普通用户
 	 */
 	private Integer type;
+
+    public String getHeadPortraits() {
+        return headPortraits;
+    }
+
+    public void setHeadPortraits(String headPortraits) {
+        this.headPortraits = headPortraits;
+    }
 
 
 	public String getId() {
@@ -149,6 +162,8 @@ public class User extends Model<User> {
 	}
 
 	public static final String ID = "id";
+
+    public static final String HEAD_PORTRAITS = "head_portraits";
 
 	public static final String NICKNAME = "nickname";
 

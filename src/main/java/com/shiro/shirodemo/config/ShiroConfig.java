@@ -54,9 +54,9 @@ public class ShiroConfig {
         // 拦截器
         Map<String,String> filterMap = new LinkedHashMap<>();
         // 可以匿名访问
-        filterMap.put("LoginApi/v1/login","anon");
-        filterMap.put("LoginApi/v1/logout","anon");
-        //filterMap.put("/jsp/error.jsp*","anon");
+        filterMap.put("/LoginApi/v1/login", "anon");
+        filterMap.put("/LoginApi/v1/logout", "anon");
+        filterMap.put("/UserApi/v1/uploadHander", "anon");
         // 需要认证才可以访问
        // filterMap.put("/jsp/index.jsp*","authc");
         filterMap.put("/*", "authc");

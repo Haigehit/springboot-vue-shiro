@@ -6,6 +6,7 @@ import com.shiro.shirodemo.entity.User;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.UserDto;
 import com.shiro.shirodemo.pojo.dto.UserInfoDto;
+import com.shiro.shirodemo.pojo.vo.UserInfoVo;
 import com.shiro.shirodemo.pojo.vo.UserVo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,4 +77,12 @@ public interface UserService extends IService<User> {
      * @return
      */
     Object editUserStatus(String id, Integer type);
+
+    /**
+     * 用户修改用户个人信息
+     *
+     * @author: jwy
+     * @date: 2018/1/15
+     */
+    Object editUserInfo(UserInfoVo vo);
 }

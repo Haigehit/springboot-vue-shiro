@@ -13,6 +13,7 @@ public class CorsConfig {
         corsConfiguration.addAllowedHeader("*"); // 2 设置访问源请求头
         corsConfiguration.addAllowedMethod("*"); // 3 设置访问源请求方法
         corsConfiguration.setAllowCredentials(true);// 4 允许跨域携带cookie
+        corsConfiguration.setMaxAge((long) 1209600);
         return corsConfiguration;
     }
 

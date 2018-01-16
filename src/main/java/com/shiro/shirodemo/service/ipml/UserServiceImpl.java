@@ -12,6 +12,7 @@ import com.shiro.shirodemo.mapper.UserMapper;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
 import com.shiro.shirodemo.pojo.dto.UserDto;
 import com.shiro.shirodemo.pojo.dto.UserInfoDto;
+import com.shiro.shirodemo.pojo.vo.UserInfoVo;
 import com.shiro.shirodemo.pojo.vo.UserVo;
 import com.shiro.shirodemo.service.LoginLogService;
 import com.shiro.shirodemo.service.UserRoleService;
@@ -67,9 +68,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UserInfoDto userInfoDto = (UserInfoDto) subject.getPrincipal();
         session.setAttribute("user", userInfoDto);
 
-        Map<String, String> map = new HashMap<>();
-        map.put("userName", userInfoDto.getUsername());
-
         // 登录日志
         LoginLog loginLog = new LoginLog();
         loginLog.setUid(userInfoDto.getId());
@@ -78,8 +76,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         loginLog.setLoginTotal(loginLogService.findMaxLoginTatalByUserId(userInfoDto.getId())); // 登录总次数
         loginLogService.insert(loginLog);
 
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("userInfo", userInfoDto);
 
-        return ResultUtil.result(EnumCode.OK.getValue(), "登陆成功", JSON.toJSON(map));
+        return ResultUtil.result(EnumCode.OK.getValue(), "登陆成功", JSON.toJSON(userInfoDto));
     }
 
     /**
@@ -167,5 +167,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return row > 0 ? ResultUtil.result(EnumCode.OK.getValue(), type == 0 ? "已禁止登陆" : "已允许登陆") : ResultUtil.result(EnumCode.INTERNAL_SERVER_ERROR.getValue(), "修改失败");
     }
 
-
+    /**
+     * 用户修改用户个人信息
+     *
+     * @author: jwy
+     * @date: 2018/1/15
+     */
+    public Object editUserInfo(UserInfoVo vo) {
+        User user = new User();
+        user.setId(vo.getId());
+        user.setNickname(vo.getName());
+        user.setEmail(vo.getEmail());
+        user.setHeadPortraits(vo.getUserImg());
+        Integer row = super.baseMapper.updateById(user);
+        if (row > 0) {
+            return ResultUtil.result(EnumCode.OK.getValue(), "修改成功，下次登录生效");
+        }
+        return ResultUtil.result(EnumCode.INTERNAL_SERVER_ERROR.getValue(), "修改失败");
+    }
 }

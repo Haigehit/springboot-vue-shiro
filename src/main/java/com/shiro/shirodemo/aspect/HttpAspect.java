@@ -52,7 +52,7 @@ public class HttpAspect extends BaseApi{
     }
     /**
      * @desc: 记录请求
-     * 
+     *
      * @author: jwy
      * @date: 2017/12/15
      */
@@ -63,7 +63,7 @@ public class HttpAspect extends BaseApi{
 
     /**
      * @desc: 响应请求
-     * 
+     *
      * @author: jwy
      * @date: 2017/12/15
      */
@@ -74,7 +74,7 @@ public class HttpAspect extends BaseApi{
 
     /**
      * @desc: 打印返回值
-     * 
+     *
      * @author: jwy
      * @date: 2017/12/15
      */
@@ -115,7 +115,7 @@ public class HttpAspect extends BaseApi{
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             HttpServletRequest request = attributes.getRequest();
 
-            String requestUrl = request.getRequestURI();
+        String requestUrl = request.getRequestURI().replaceAll(request.getContextPath(), "");
             String remoteAddr = request.getRemoteAddr();
             String method = request.getMethod();
             String args = Arrays.toString(joinPoint.getArgs());
@@ -130,14 +130,14 @@ public class HttpAspect extends BaseApi{
         log.info("========================== ↑收到请求↑ ==========================");
 
         OperatingRecord or = new OperatingRecord();
-        or.setRequestUrl(request.getRequestURI());
+        or.setRequestUrl(requestUrl);
         or.setRemoteAddr(remoteAddr);
         or.setMethod(method);
         or.setParams(args);
         or.setCreateTime(new Date());
         or.setUid(super.getUserId());
 
-        Integer count = permissionService.findCountByUrl(request.getRequestURI().replaceAll(request.getContextPath(),""));
+        Integer count = permissionService.findCountByUrl(requestUrl);
         if (count != 0){
             String roleId = super.getRoleId();
             if (StringUtils.isEmpty(roleId)) {

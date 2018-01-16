@@ -10,6 +10,17 @@ public class UserInfoDto {
 
 
     private String id;
+
+    /**
+     * 用户头像
+     */
+    private String userImg;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
     /**
      * 用户名称
      */
@@ -94,5 +105,21 @@ public class UserInfoDto {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

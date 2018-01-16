@@ -23,6 +23,7 @@ spring:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
 
+
 #mybatis 配置
 mybatis:
   mapper-locations: classpath:com/shiro/shirodemo/mapper/xml/*.xml

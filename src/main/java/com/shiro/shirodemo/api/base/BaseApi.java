@@ -4,6 +4,11 @@ import com.shiro.shirodemo.entity.User;
 import com.shiro.shirodemo.pojo.dto.UserInfoDto;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * @desc:
@@ -12,6 +17,21 @@ import org.apache.shiro.subject.Subject;
  * @date: 2018/1/2
  */
 public class BaseApi {
+
+
+    /**
+     * 获取 request
+     *
+     * @return
+     */
+    protected HttpServletRequest getRequest() {
+
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes())
+                .getRequest();
+        return request;
+
+    }
 
     /**
      * 获取用户名称

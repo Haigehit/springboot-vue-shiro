@@ -57,6 +57,12 @@ public class OperatingRecord extends Model<OperatingRecord> {
 	 */
 	private String userName;
 
+    @TableField(exist = false)
+    /**
+     * 菜单名称
+     */
+    private String permName;
+
 
 	public String getId() {
 		return id;
@@ -129,6 +135,14 @@ public class OperatingRecord extends Model<OperatingRecord> {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+    public String getPermName() {
+        return permName;
+    }
+
+    public void setPermName(String permName) {
+        this.permName = permName;
+    }
 
 	public static final String ID = "id";
 

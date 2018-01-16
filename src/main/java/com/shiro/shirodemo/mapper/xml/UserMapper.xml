@@ -5,6 +5,7 @@
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.shiro.shirodemo.entity.User">
 		<id column="id" property="id" />
+        <result column="head_portraits" property="headPortraits"/>
 		<result column="nickname" property="nickname" />
 		<result column="email" property="email" />
 		<result column="pswd" property="pswd" />
@@ -41,11 +42,13 @@
 	</select>
 
 	<select id="checkUser" resultType="com.shiro.shirodemo.pojo.dto.UserInfoDto">
-		SELECT
+        SELECT
 		usr.id,
 		usr.nickname AS username,
 		usr.`status` AS state,
 		usr.pswd AS password ,
+        usr.head_portraits AS userImg,
+        usr.email,
 		ur.rid AS roleid,
 		r.`name` AS roleName,
 		r.type AS type
