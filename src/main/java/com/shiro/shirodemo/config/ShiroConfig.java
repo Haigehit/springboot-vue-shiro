@@ -48,7 +48,6 @@ public class ShiroConfig {
         // 登录页面
         sffb.setLoginUrl("/LoginApi/v1/login");
         // 登录成功后要跳转的链接
-        sffb.setSuccessUrl("/index");
         // 未授权界面;
         sffb.setUnauthorizedUrl("/login");
         // 拦截器
@@ -58,7 +57,6 @@ public class ShiroConfig {
         filterMap.put("/LoginApi/v1/logout", "anon");
         filterMap.put("/UserApi/v1/uploadHander", "anon");
         // 需要认证才可以访问
-       // filterMap.put("/jsp/index.jsp*","authc");
         filterMap.put("/*", "authc");
         filterMap.put("/**", "authc");
         filterMap.put("/*.*", "authc");

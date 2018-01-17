@@ -1,13 +1,12 @@
 server:
   port: 8089
-  context-path: /shiro
 
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.78.131.193:3306/shiro?characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/shiro?characterEncoding=utf8
     username: root
-    password:
+    password: 1234
     type: com.alibaba.druid.pool.DruidDataSource
     filters: stat
     maxActive: 20
@@ -27,6 +26,4 @@ spring:
 mybatis:
   mapper-locations: classpath:com/shiro/shirodemo/mapper/xml/*.xml
   type-aliases-package: com.shiro.shirodemo.entity
-
-
 

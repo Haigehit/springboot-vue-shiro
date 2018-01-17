@@ -62,6 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     public Object login(String name, String pass, HttpSession session, HttpServletRequest request) {
 
+        System.out.print("MD5加密后：" + SecureUtil.md5(pass));
         UsernamePasswordToken upToken = new UsernamePasswordToken(name, SecureUtil.md5(pass));
         Subject subject = SecurityUtils.getSubject();
         subject.login(upToken);

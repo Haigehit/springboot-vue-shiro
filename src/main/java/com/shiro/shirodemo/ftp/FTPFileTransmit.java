@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * ftp文件工具类
+ *  ftp文件工具类
  *
  * @author: jwy
  * @date: 2018/1/13
@@ -26,9 +26,8 @@ public class FTPFileTransmit {
 
         this.ftpName = "ftpName";
         this.ftpPassword = "ftpPassword";
-        this.ftpServerIP = "ftpServerIP";
+        this.ftpServerIP = "127.0.0.1";
         this.ftpPort = 21;
-
 
     }
 
@@ -36,10 +35,9 @@ public class FTPFileTransmit {
      * Method name: saveInFTP <BR>
      * Description: 把文件存储在FTP上 <BR>
      * Remark: <BR>
-     *
-     * @param FolderName 示例"/20161118_ReTransmit/"
-     * @param FileName   示例"2011080912345678.text"
-     * @param data       byte[]数组
+     * @param FolderName            示例"/20161118_ReTransmit/"
+     * @param FileName                示例"2011080912345678.text"
+     * @param data                    byte[]数组
      * @return boolean<BR>
      */
     public boolean saveInFTP(String FolderName, String FileName, byte[] data) {
@@ -103,7 +101,6 @@ public class FTPFileTransmit {
      * Description: 从FTP上读取文件 <BR>
      * filePath=/20161118_ReTransmit/111.jpg <BR>
      * outPutFilePath = C:/ftpload.jpg
-     *
      * @return boolean<BR>
      */
     public boolean getFromFTP(String filePath, String outPutFilePath) {
@@ -151,7 +148,6 @@ public class FTPFileTransmit {
 
         return flag;
     }
-
     /**
      * 自动创建ftp根目录下的的文件夹目录
      */
@@ -295,10 +291,10 @@ public class FTPFileTransmit {
     }
 
     /**
+     *
      * Method name: minusTime <BR>
      * Description: 获取前两天的时间,如2011-8-1的前两天就是2011-7-30 <BR>
      * Remark: <BR>
-     *
      * @return String<BR>
      */
     private String minusTime() {
@@ -330,7 +326,6 @@ public class FTPFileTransmit {
         }
         return buffer;
     }
-
     public static void main(String[] args) {
         FTPFileTransmit ftpFileTransmit = new FTPFileTransmit();
         //=================================创建文件夹===========================================//
