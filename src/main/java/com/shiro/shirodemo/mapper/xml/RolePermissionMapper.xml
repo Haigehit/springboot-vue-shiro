@@ -28,4 +28,37 @@
 		AND rp.rid =  #{roleId}
 	</select>
 
+
+    <!-- 根据父id查询菜单 -->
+    <select id="findRolesPermisByFatherId" resultType="com.shiro.shirodemo.pojo.dto.RolePermisDto">
+        <if test="null == fatherId">
+            SELECT
+            sys_permission.`name`,
+            sys_permission.url,
+            sys_permission.id,
+            sys_permission.iconCls
+            FROM
+            `sys_permission`
+            WHERE
+            fatherId = '0'
+            GROUP BY sys_permission.id
+        </if>
+        <if test="null != fatherId">
+            SELECT
+            sys_permission.`name`,
+            sys_permission.url,
+            sys_permission.id,
+            sys_permission.iconCls
+            FROM
+            sys_role_permission
+            RIGHT JOIN sys_permission ON sys_role_permission.pid = sys_permission.id
+            WHERE
+            fatherId = #{fatherId}
+            <if test="null != rid">
+                AND rid = #{rid}
+            </if>
+            GROUP BY sys_permission.id
+        </if>
+    </select>
+
 </mapper>

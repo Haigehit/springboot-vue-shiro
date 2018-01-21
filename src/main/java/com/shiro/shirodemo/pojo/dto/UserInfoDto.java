@@ -1,5 +1,7 @@
 package com.shiro.shirodemo.pojo.dto;
 
+import java.util.ArrayList;
+
 /**
  * 用户登录信息
  *
@@ -50,6 +52,11 @@ public class UserInfoDto {
      * 用户类型
      */
     private Integer type;
+
+    /**
+     * 角色菜单
+     */
+    private ArrayList<RolePermisDto> rolePermis;
 
     public String getId() {
         return id;
@@ -121,5 +128,13 @@ public class UserInfoDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ArrayList<RolePermisDto> getRolePermis() {
+        return rolePermis;
+    }
+
+    public void setRolePermis(ArrayList<RolePermisDto> rolePermis) {
+        this.rolePermis = rolePermis;
     }
 }

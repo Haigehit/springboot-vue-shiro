@@ -65,6 +65,11 @@ public class Permission extends Model<Permission> {
      */
 	private String updater;
 
+    /**
+     * icon
+     */
+    private String iconCls;
+
 	@TableField(exist = false)
 	/**
 	 * 上级菜单
@@ -178,9 +183,17 @@ public class Permission extends Model<Permission> {
 		return typeName;
 	}
 
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
-	}
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getIconCls() {
+        return iconCls;
+    }
+
+    public void setIconCls(String iconCls) {
+        this.iconCls = iconCls;
+    }
 
 	public static final String ID = "id";
 

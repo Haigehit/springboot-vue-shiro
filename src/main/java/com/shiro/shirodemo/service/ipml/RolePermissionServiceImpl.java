@@ -5,9 +5,11 @@ import com.shiro.shirodemo.Enum.EnumCode;
 import com.shiro.shirodemo.entity.RolePermission;
 import com.shiro.shirodemo.mapper.RolePermissionMapper;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
+import com.shiro.shirodemo.pojo.dto.RolePermisDto;
 import com.shiro.shirodemo.pojo.dto.RolePermisVo;
 import com.shiro.shirodemo.service.RolePermissionService;
 import com.shiro.shirodemo.utils.ResultUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,5 +71,15 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
      */
     public Integer findCountByRole(String roleId,String url) {
         return super.baseMapper.findCountByRole(roleId, url);
+    }
+
+    /**
+     * 根据父id\角色id查询角色菜单
+     *
+     * @author: jwy
+     * @date: 2018/1/20
+     */
+    public List<RolePermisDto> findRolesPermisByFatherId(String fatherId, String rid) {
+        return super.baseMapper.findRolesPermisByFatherId(fatherId, rid);
     }
 }

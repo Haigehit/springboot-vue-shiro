@@ -10,6 +10,7 @@
 		<result column="fatherId" property="fatherId" />
 		<result column="sort" property="sort" />
 		<result column="type" property="type" />
+        <result column="iconCls" property="type"/>
 	</resultMap>
 
 	<!--分页查询菜单-->

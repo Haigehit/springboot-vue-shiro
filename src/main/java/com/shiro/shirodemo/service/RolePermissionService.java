@@ -3,7 +3,9 @@ package com.shiro.shirodemo.service;
 import com.baomidou.mybatisplus.service.IService;
 import com.shiro.shirodemo.entity.RolePermission;
 import com.shiro.shirodemo.pojo.dto.ParamsDto;
+import com.shiro.shirodemo.pojo.dto.RolePermisDto;
 import com.shiro.shirodemo.pojo.dto.RolePermisVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -39,4 +41,12 @@ public interface RolePermissionService extends IService<RolePermission> {
      * @return
      */
     Integer findCountByRole(String roleId,String url);
+
+    /**
+     * 根据父id\角色id查询角色菜单
+     *
+     * @author: jwy
+     * @date: 2018/1/20
+     */
+    List<RolePermisDto> findRolesPermisByFatherId(String fatherId, String rid);
 }
